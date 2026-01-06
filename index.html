@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villijr - Tool Sharing Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D5F3F;
+            --primary-light: #4A8B5C;
+            --secondary: #D97706;
+            --accent: #F59E0B;
+            --bg: #F8F7F4;
+            --card-bg: #FFFFFF;
+            --text: #1F2937;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --notification: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container for mobile screens */
+        .phone-container {
+            max-width: 420px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow), 0 0 0 8px #1F2937;
+            position: relative;
+        }
+
+        /* Notch */
+        .notch {
+            height: 32px;
+            background: #1F2937;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .notch-center {
+            width: 120px;
+            height: 24px;
+            background: #000;
+            border-radius: 0 0 16px 16px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Screen wrapper */
+        .screen {
+            min-height: 812px;
+            background: var(--bg);
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .header .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .notification-badge {
+            background: var(--notification);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            position: absolute;
+            top: -4px;
+            right: -4px;
+        }
+
+        /* Content area */
+        .content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .logo p {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideUp 0.5s ease backwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.1);
+        }
+
+        .file-upload {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(45, 95, 63, 0.02);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Search bar */
+        .search-bar {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            background: white;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        /* Tool category */
+        .tool-category {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .category-toggle {
+            font-size: 20px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .category-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .category-columns {
+            display: grid;
+            grid-template-columns: 1fr 60px 60px 60px;
+            gap: 8px;
+            align-items: end;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .column-header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .column-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .tool-item {
+            display: grid;
+            grid-template-columns: 1fr 60px 60px 60px;
+            gap: 8px;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .tool-item:last-child {
+            border-bottom: none;
+        }
+
+        .tool-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .checkbox {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        /* Search results */
+        .search-result {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .tool-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .owner-name {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .availability {
+            background: #ECFDF5;
+            color: #059669;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-small {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Dashboard cards */
+        .dashboard-cards {
+            display: grid;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px var(--shadow);
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Maintenance tasks */
+        .task-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .task-checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .task-due {
+            font-size: 13px;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .task-priority {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .priority-high {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .priority-medium {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 12px 0;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(45, 95, 63, 0.08);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .empty-description {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Connection request */
+        .connection-request {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .request-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .request-info h4 {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .request-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Navigation controls */
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            padding: 20px;
+            background: #1F2937;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Notch -->
+        <div class="notch">
+            <span>9:41</span>
+            <div class="notch-center"></div>
+            <span>⚡︎ 100%</span>
+        </div>
+
+        <!-- Screen 1: Sign Up -->
+        <div class="screen active" id="screen-signup">
+            <div class="content">
+                <div class="logo">
+                    <h1>Villijr</h1>
+                    <p>Share tools with your community</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe" />
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="john@example.com" />
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" placeholder="123 Main St, City, State" />
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Your Tools (CSV)</label>
+                    <label class="file-upload">
+                        <input type="file" accept=".csv" />
+                        <div class="file-upload-icon">📄</div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">Click to upload</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">CSV format with tool names and categories</div>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Find People in Your Area</label>
+                    <input type="text" placeholder="Search for friends to connect with..." />
+                    <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+                        We'll show you people nearby who are already on Villijr
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="showScreen('screen-tools')">
+                        Create Account →
+                    </button>
+                </div>
+
+                <div style="text-align: center; margin-top: 16px;">
+                    <a href="#" style="color: var(--text-muted); font-size: 14px; font-weight: 600;">
+                        Already have an account? Sign in
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 2: Tool Management -->
+        <div class="screen" id="screen-tools">
+            <div class="header">
+                <h1>My Tools</h1>
+                <button class="header .back-btn" onclick="showScreen('screen-dashboard')" style="border: none; background: none; color: white; font-size: 16px; cursor: pointer; font-weight: 600;">
+                    Done
+                </button>
+            </div>
+            <div class="content" style="padding-top: 16px;">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search your tools..." />
+                </div>
+
+                <!-- Hand Tools Category -->
+                <div class="tool-category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <div class="category-title">
+                            <span class="category-icon">🔨</span>
+                            <span>Hand Tools</span>
+                        </div>
+                        <span class="category-toggle">▼</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="category-columns">
+                            <div></div>
+                            <div class="column-header">
+                                <span class="column-label">Maint.</span>
+                                <input type="checkbox" class="checkbox" title="Toggle all maintenance" />
+                            </div>
+                            <div class="column-header">
+                                <span class="column-label">Share</span>
+                                <input type="checkbox" class="checkbox" title="Toggle all sharing" />
+                            </div>
+                            <div class="column-header">
+                                <span class="column-label">TBD</span>
+                                <input type="checkbox" class="checkbox" title="Toggle all TBD" />
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Hammer</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Screwdriver Set</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Socket Wrench Set</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Power Tools Category -->
+                <div class="tool-category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <div class="category-title">
+                            <span class="category-icon">⚡</span>
+                            <span>Power Tools</span>
+                        </div>
+                        <span class="category-toggle">▼</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="category-columns">
+                            <div></div>
+                            <div class="column-header">
+                                <span class="column-label">Maint.</span>
+                                <input type="checkbox" class="checkbox" />
+                            </div>
+                            <div class="column-header">
+                                <span class="column-label">Share</span>
+                                <input type="checkbox" class="checkbox" />
+                            </div>
+                            <div class="column-header">
+                                <span class="column-label">TBD</span>
+                                <input type="checkbox" class="checkbox" />
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Circular Saw</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Drill Driver</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Angle Grinder</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Yard Tools Category -->
+                <div class="tool-category">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <div class="category-title">
+                            <span class="category-icon">🌿</span>
+                            <span>Yard Tools</span>
+                        </div>
+                        <span class="category-toggle">▼</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="category-columns">
+                            <div></div>
+                            <div class="column-header">
+                                <span class="column-label">Maint.</span>
+                                <input type="checkbox" class="checkbox" />
+                            </div>
+                            <div class="column-header">
+                                <span class="column-label">Share</span>
+                                <input type="checkbox" class="checkbox" />
+                            </div>
+                            <div class="column-header">
+                                <span class="column-label">TBD</span>
+                                <input type="checkbox" class="checkbox" />
+                            </div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Lawn Mower</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                        <div class="tool-item">
+                            <div class="tool-name">Leaf Blower</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" style="margin-top: 24px;">
+                    + Add New Category
+                </button>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('screen-dashboard')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-search')">
+                    <span class="nav-icon">🔍</span>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item active">
+                    <span class="nav-icon">🛠️</span>
+                    <span>My Tools</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-villij')">
+                    <span class="nav-icon">👥</span>
+                    <span>Villij</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Search -->
+        <div class="screen" id="screen-search">
+            <div class="header">
+                <h1>Find a Tool</h1>
+            </div>
+            <div class="content" style="padding-top: 16px;">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search for tools..." value="Hammer Drill" />
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    In Your Villij
+                </h3>
+
+                <div class="search-result">
+                    <div class="result-header">
+                        <div class="tool-info">
+                            <h3>DeWalt Hammer Drill</h3>
+                            <div class="owner-name">Mike Johnson</div>
+                        </div>
+                        <div class="availability">Available</div>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+                        📍 0.3 miles away • 📞 (555) 123-4567
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn-small" style="background: var(--primary); color: white;">
+                            📱 Send SMS
+                        </button>
+                        <button class="btn-small" style="background: white; border: 2px solid var(--primary); color: var(--primary);">
+                            👤 View Profile
+                        </button>
+                    </div>
+                </div>
+
+                <div class="search-result">
+                    <div class="result-header">
+                        <div class="tool-info">
+                            <h3>Makita Rotary Hammer</h3>
+                            <div class="owner-name">Sarah Williams</div>
+                        </div>
+                        <div class="availability" style="background: #FEF3C7; color: #D97706;">On Loan</div>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+                        📍 0.5 miles away • 📞 (555) 987-6543
+                    </div>
+                    <div style="font-size: 13px; color: var(--secondary); font-weight: 600;">
+                        Available again on Jan 15, 2026
+                    </div>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin: 32px 0 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Local Rentals & Stores
+                </h3>
+
+                <div class="search-result">
+                    <div class="result-header">
+                        <div class="tool-info">
+                            <h3>Home Depot Tool Rental</h3>
+                            <div class="owner-name">2.1 miles away</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text); margin-bottom: 8px; font-weight: 600;">
+                        💰 $45/day • $180/week
+                    </div>
+                    <button class="btn-small" style="background: white; border: 2px solid var(--border); color: var(--text); width: 100%;">
+                        🌐 View Website
+                    </button>
+                </div>
+
+                <div class="search-result">
+                    <div class="result-header">
+                        <div class="tool-info">
+                            <h3>Community Tool Library</h3>
+                            <div class="owner-name">1.3 miles away</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 14px; color: var(--text); margin-bottom: 8px; font-weight: 600;">
+                        💰 Free with membership ($50/year)
+                    </div>
+                    <button class="btn-small" style="background: white; border: 2px solid var(--border); color: var(--text); width: 100%;">
+                        🌐 View Website
+                    </button>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('screen-dashboard')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item active">
+                    <span class="nav-icon">🔍</span>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-tools')">
+                    <span class="nav-icon">🛠️</span>
+                    <span>My Tools</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-villij')">
+                    <span class="nav-icon">👥</span>
+                    <span>Villij</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Dashboard -->
+        <div class="screen" id="screen-dashboard">
+            <div class="header">
+                <h1>Villijr</h1>
+                <button class="header .back-btn" style="border: none; background: none; color: white; font-size: 24px; cursor: pointer; position: relative;">
+                    ⚙️
+                </button>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 16px; padding: 24px; color: white; margin-bottom: 24px;">
+                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Welcome back, John! 👋</h2>
+                    <p style="font-size: 14px; opacity: 0.9;">You have 3 tools on loan and 2 pending requests</p>
+                </div>
+
+                <div class="dashboard-cards">
+                    <div class="dashboard-card" onclick="showScreen('screen-search')">
+                        <div class="card-icon">🔍</div>
+                        <div class="card-title">Find a Tool</div>
+                        <div class="card-description">Search tools available in your Villij</div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="showScreen('screen-maintenance')" style="position: relative;">
+                        <span class="notification-badge">3</span>
+                        <div class="card-icon">🔧</div>
+                        <div class="card-title">Maintenance</div>
+                        <div class="card-description">3 tools need attention</div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="showScreen('screen-tools')">
+                        <div class="card-icon">📦</div>
+                        <div class="card-title">My Tools</div>
+                        <div class="card-description">Manage your tool inventory</div>
+                    </div>
+
+                    <div class="dashboard-card" onclick="showScreen('screen-villij')">
+                        <div class="card-icon">👥</div>
+                        <div class="card-title">My Villij</div>
+                        <div class="card-description">Connect with tool-sharing neighbors</div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <div class="card-icon">🆕</div>
+                        <div class="card-title">Start a Villij</div>
+                        <div class="card-description">Create your own tool-sharing circle</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-search')">
+                    <span class="nav-icon">🔍</span>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-tools')">
+                    <span class="nav-icon">🛠️</span>
+                    <span>My Tools</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-villij')">
+                    <span class="nav-icon">👥</span>
+                    <span>Villij</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 5: Villij Management -->
+        <div class="screen" id="screen-villij">
+            <div class="header">
+                <h1>My Villij</h1>
+            </div>
+            <div class="content" style="padding-top: 16px;">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search for people..." />
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Pending Requests (2)
+                </h3>
+
+                <div class="connection-request">
+                    <div class="request-header">
+                        <div class="avatar">EJ</div>
+                        <div class="request-info">
+                            <h4>Emily Johnson</h4>
+                            <p>0.4 miles away</p>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-small" style="background: var(--primary); color: white;">
+                            ✓ Accept
+                        </button>
+                        <button class="btn-small" style="background: white; border: 2px solid var(--border); color: var(--text);">
+                            ✗ Decline
+                        </button>
+                    </div>
+                </div>
+
+                <div class="connection-request">
+                    <div class="request-header">
+                        <div class="avatar">RB</div>
+                        <div class="request-info">
+                            <h4>Robert Brown</h4>
+                            <p>0.6 miles away</p>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-small" style="background: var(--primary); color: white;">
+                            ✓ Accept
+                        </button>
+                        <button class="btn-small" style="background: white; border: 2px solid var(--border); color: var(--text);">
+                            ✗ Decline
+                        </button>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin: 32px 0 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Connected (5)
+                </h3>
+
+                <div class="connection-request" style="cursor: pointer;">
+                    <div class="request-header" style="margin-bottom: 0;">
+                        <div class="avatar">MJ</div>
+                        <div class="request-info">
+                            <h4>Mike Johnson</h4>
+                            <p>0.3 miles away • 12 shared tools</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="connection-request" style="cursor: pointer;">
+                    <div class="request-header" style="margin-bottom: 0;">
+                        <div class="avatar">SW</div>
+                        <div class="request-info">
+                            <h4>Sarah Williams</h4>
+                            <p>0.5 miles away • 8 shared tools</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="connection-request" style="cursor: pointer;">
+                    <div class="request-header" style="margin-bottom: 0;">
+                        <div class="avatar">DL</div>
+                        <div class="request-info">
+                            <h4>David Lee</h4>
+                            <p>0.7 miles away • 15 shared tools</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: 24px;">
+                    + Add Someone to My Villij
+                </button>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('screen-dashboard')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-search')">
+                    <span class="nav-icon">🔍</span>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-tools')">
+                    <span class="nav-icon">🛠️</span>
+                    <span>My Tools</span>
+                </div>
+                <div class="nav-item active">
+                    <span class="nav-icon">👥</span>
+                    <span>Villij</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screen 6: Maintenance -->
+        <div class="screen" id="screen-maintenance">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('screen-dashboard')">←</button>
+                <h1>Maintenance</h1>
+                <div style="width: 36px;"></div>
+            </div>
+            <div class="content" style="padding-top: 16px;">
+                <div style="background: #FEF3C7; border-radius: 12px; padding: 16px; margin-bottom: 24px; border-left: 4px solid var(--secondary);">
+                    <div style="font-weight: 700; color: var(--secondary); margin-bottom: 4px;">
+                        3 Maintenance Tasks Due
+                    </div>
+                    <div style="font-size: 14px; color: var(--text-muted);">
+                        Keep your tools in top condition
+                    </div>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    High Priority
+                </h3>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox" />
+                    <div class="task-info">
+                        <div class="task-title">Sharpen Lawn Mower Blade</div>
+                        <div class="task-due">Due: Jan 8, 2026</div>
+                    </div>
+                    <span class="task-priority priority-high">HIGH</span>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox" />
+                    <div class="task-info">
+                        <div class="task-title">Oil Change - Circular Saw</div>
+                        <div class="task-due">Due: Jan 10, 2026</div>
+                    </div>
+                    <span class="task-priority priority-high">HIGH</span>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin: 32px 0 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Medium Priority
+                </h3>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox" />
+                    <div class="task-info">
+                        <div class="task-title">Clean Air Filter - Leaf Blower</div>
+                        <div class="task-due">Due: Jan 15, 2026</div>
+                    </div>
+                    <span class="task-priority priority-medium">MEDIUM</span>
+                </div>
+
+                <h3 style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin: 32px 0 16px; text-transform: uppercase; letter-spacing: 0.5px;">
+                    Upcoming
+                </h3>
+
+                <div class="task-item" style="opacity: 0.6;">
+                    <input type="checkbox" class="task-checkbox" disabled />
+                    <div class="task-info">
+                        <div class="task-title">Battery Check - Drill Driver</div>
+                        <div class="task-due">Due: Jan 20, 2026</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" style="margin-top: 24px;">
+                    + Add Custom Reminder
+                </button>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('screen-dashboard')">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-search')">
+                    <span class="nav-icon">🔍</span>
+                    <span>Search</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-tools')">
+                    <span class="nav-icon">🛠️</span>
+                    <span>My Tools</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('screen-villij')">
+                    <span class="nav-icon">👥</span>
+                    <span>Villij</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="showScreen('screen-signup')">Sign Up</button>
+            <button class="nav-btn" onclick="showScreen('screen-dashboard')">Dashboard</button>
+            <button class="nav-btn" onclick="showScreen('screen-tools')">My Tools</button>
+            <button class="nav-btn" onclick="showScreen('screen-search')">Search</button>
+            <button class="nav-btn" onclick="showScreen('screen-villij')">Villij</button>
+            <button class="nav-btn" onclick="showScreen('screen-maintenance')">Maintenance</button>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function toggleCategory(header) {
+            const toggle = header.querySelector('.category-toggle');
+            const content = header.nextElementSibling;
+            
+            toggle.classList.toggle('open');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        }
+
+        function toggleColumnCheckboxes(headerCheckbox, columnIndex) {
+            // Find the parent category
+            const category = headerCheckbox.closest('.tool-category');
+            
+            // Get all tool items in this category
+            const toolItems = category.querySelectorAll('.tool-item');
+            
+            // Toggle all checkboxes in this column
+            toolItems.forEach(item => {
+                const checkboxes = item.querySelectorAll('.checkbox');
+                if (checkboxes[columnIndex]) {
+                    checkboxes[columnIndex].checked = headerCheckbox.checked;
+                }
+            });
+        }
+
+        // Initialize - collapse all categories except first and add column header functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const categories = document.querySelectorAll('.tool-category');
+            categories.forEach((category, index) => {
+                if (index > 0) {
+                    const content = category.querySelector('.category-content');
+                    const toggle = category.querySelector('.category-toggle');
+                    content.style.display = 'none';
+                }
+
+                // Add event listeners to column header checkboxes
+                const columnHeaders = category.querySelectorAll('.category-columns .column-header .checkbox');
+                columnHeaders.forEach((checkbox, columnIndex) => {
+                    checkbox.addEventListener('change', function() {
+                        toggleColumnCheckboxes(this, columnIndex);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
