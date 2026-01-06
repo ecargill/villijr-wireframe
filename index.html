@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Villijr - Tool Sharing Community</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -34,6 +36,8 @@
             overflow-x: hidden;
             margin: 0;
             padding: 0;
+            height: 100vh;
+            height: 100svh; /* Small viewport height for mobile browsers */
         }
 
         /* Container for mobile screens */
@@ -44,6 +48,7 @@
             overflow: hidden;
             position: relative;
             height: 100vh;
+            height: 100svh;
             display: flex;
             flex-direction: column;
         }
@@ -52,6 +57,7 @@
             body {
                 background: #1F2937;
                 padding: 20px 0;
+                height: 100vh;
             }
             
             .phone-container {
@@ -192,6 +198,13 @@
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
             min-height: 0;
+            padding-bottom: max(24px, env(safe-area-inset-bottom, 24px));
+        }
+
+        @media (max-width: 420px) {
+            .content {
+                padding-bottom: 80px; /* Extra space for mobile Safari */
+            }
         }
 
         /* Logo */
@@ -721,13 +734,7 @@
 
         @media (max-width: 420px) {
             .nav-controls {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                z-index: 1000;
-                background: rgba(31, 41, 55, 0.95);
-                backdrop-filter: blur(10px);
+                display: none; /* Hide on actual mobile devices */
             }
         }
 
@@ -804,7 +811,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary" onclick="showScreen('screen-tools')">
+                    <button class="btn btn-primary" onclick="showScreen('screen-dashboard')">
                         Create Account →
                     </button>
                 </div>
@@ -1358,7 +1365,7 @@
         </div>
 
         <!-- Navigation Controls -->
-        <div class="nav-controls">
+        <div class="nav-controls" style="display: none;">
             <button class="nav-btn" onclick="showScreen('screen-signup')">Sign Up</button>
             <button class="nav-btn" onclick="showScreen('screen-dashboard')">Dashboard</button>
             <button class="nav-btn" onclick="showScreen('screen-tools')">My Tools</button>
@@ -1382,7 +1389,42 @@
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            // Show/hide bottom nav based on screen
+            const screensWithoutNav = ['screen-signup'];
+            const allBottomNavs = document.querySelectorAll('.bottom-nav');
+            
+            if (screensWithoutNav.includes(screenId)) {
+                allBottomNavs.forEach(nav => nav.style.display = 'none');
+            } else {
+                allBottomNavs.forEach(nav => nav.style.display = 'flex');
+            }
+
+            // Update active nav item
+            updateActiveNavItem(screenId);
+        }
+
+        function updateActiveNavItem(screenId) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const navMap = {
+                'screen-dashboard': 0,
+                'screen-search': 1,
+                'screen-tools': 2,
+                'screen-villij': 3,
+                'screen-maintenance': 0 // Goes back to home
+            };
+
+            const navItems = document.querySelectorAll('.nav-item');
+            const activeIndex = navMap[screenId];
+            if (activeIndex !== undefined && navItems[activeIndex]) {
+                navItems[activeIndex].classList.add('active');
+            }
         }
 
         function toggleCategory(header) {
@@ -1432,6 +1474,10 @@
                     });
                 });
             });
+
+            // Hide bottom nav on signup screen initially
+            const allBottomNavs = document.querySelectorAll('.bottom-nav');
+            allBottomNavs.forEach(nav => nav.style.display = 'none');
         });
     </script>
 </body>
