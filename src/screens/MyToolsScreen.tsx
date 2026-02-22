@@ -167,7 +167,6 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
           </div>
           <div className="flex-1">
             <p className="font-bold text-white text-sm">Add a Tool</p>
-            <p className="text-white/70 text-xs mt-0.5">Use camera to identify &amp; add</p>
           </div>
           <span className="text-white/70 text-lg">›</span>
         </button>
