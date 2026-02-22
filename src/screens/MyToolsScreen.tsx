@@ -93,28 +93,17 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
   const [query, setQuery] = useState('')
   const [addedCount, setAddedCount] = useState(userAddedTools.length)
   const [userCategories, setUserCategories] = useState<ToolCategory[]>([])
-  const [catFormMounted, setCatFormMounted] = useState(false)   // in the DOM?
-  const [catFormVisible, setCatFormVisible] = useState(false)   // animated open?
+  const [addingCategory, setAddingCategory] = useState(false)
   const [newCatName, setNewCatName] = useState('')
   const [newCatIcon, setNewCatIcon] = useState('🔨')
   const nameInputRef = useRef<HTMLInputElement>(null)
 
-  const openCatForm = () => {
-    setCatFormMounted(true)
-    setCatFormVisible(true)
-  }
-
-  const closeCatForm = () => {
-    setCatFormVisible(false)
-    setTimeout(() => setCatFormMounted(false), 350)
-  }
-
-  const addingCategory = catFormMounted // used for button highlight logic
-
   // Focus name input when form opens
   useEffect(() => {
-    if (catFormVisible) nameInputRef.current?.focus()
-  }, [catFormVisible])
+    if (addingCategory) {
+      setTimeout(() => nameInputRef.current?.focus(), 350)
+    }
+  }, [addingCategory])
 
   if (userAddedTools.length > 0 && userAddedTools.length !== addedCount) {
     setAddedCount(userAddedTools.length)
@@ -163,7 +152,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
     setUserCategories((prev) => [...prev, newCat])
     setNewCatName('')
     setNewCatIcon('🔨')
-    closeCatForm()
+    setAddingCategory(false)
   }
 
   return (
@@ -197,7 +186,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
           </button>
 
           <button
-            onClick={() => catFormMounted ? closeCatForm() : openCatForm()}
+            onClick={() => setAddingCategory((v) => !v)}
             className={`flex-1 flex items-center gap-3 rounded-2xl px-4 py-4 shadow-sm transition-colors text-left border
               ${addingCategory
                 ? 'bg-primary/10 border-primary/30'
@@ -215,26 +204,8 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
           </button>
         </div>
 
-        {/* Inline Add Category form */}
-        <style>{`
-          @keyframes catFormIn {
-            from { max-height: 0; opacity: 0; }
-            to   { max-height: 600px; opacity: 1; }
-          }
-          @keyframes catFormOut {
-            from { max-height: 600px; opacity: 1; }
-            to   { max-height: 0; opacity: 0; }
-          }
-        `}</style>
-        {catFormMounted && (
-        <div
-          style={{
-            overflow: 'hidden',
-            animation: catFormVisible
-              ? 'catFormIn 350ms ease-in-out forwards'
-              : 'catFormOut 350ms ease-in-out forwards',
-          }}
-        >
+        {/* Inline Add Category form — always in DOM, height toggled via classes */}
+        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${addingCategory ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-primary/20 flex flex-col gap-4">
             <p className="text-xs font-bold uppercase tracking-widest text-content-muted">New Category</p>
 
@@ -276,7 +247,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
             {/* Actions */}
             <div className="flex gap-3">
               <button
-                onClick={() => { closeCatForm(); setNewCatName(''); setNewCatIcon('🔨') }}
+                onClick={() => { setAddingCategory(false); setNewCatName(''); setNewCatIcon('🔨') }}
                 className="flex-1 py-3 rounded-xl border border-border text-sm font-semibold text-content-muted hover:bg-gray-50 transition-colors"
               >
                 Cancel
@@ -292,7 +263,6 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
             </div>
           </div>
         </div>
-        )}
 
         {filtered.map((cat) => (
           <ToolCategorySection key={cat.id} category={cat} />
