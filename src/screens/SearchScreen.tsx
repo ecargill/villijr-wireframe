@@ -56,8 +56,8 @@ export default function SearchScreen({ onNavigate }: SearchScreenProps) {
             )}
             {result.status === 'available' && (
               <div className="flex gap-2">
-                <button className="flex-1 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold flex items-center justify-center gap-1">
-                  <span>📱</span> <span>Send SMS</span>
+                <button className="flex-1 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold flex items-center justify-center">
+                  Send SMS
                 </button>
                 <button className="flex-1 py-2.5 rounded-lg border-2 border-primary text-primary text-sm font-semibold flex items-center justify-center gap-1">
                   <span>👤</span> <span>View Profile</span>
