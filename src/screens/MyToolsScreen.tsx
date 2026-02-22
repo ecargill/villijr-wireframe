@@ -158,14 +158,14 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-primary px-6 py-5 flex items-center justify-between flex-shrink-0">
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">My Tools</h1>
+      <div className="bg-primary px-6 py-5 flex items-center gap-3 flex-shrink-0">
         <button
           onClick={() => onNavigate('dashboard')}
-          className="text-white text-base font-semibold"
+          className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center text-white text-lg hover:bg-white/30 transition-colors"
         >
-          Done
+          ←
         </button>
+        <h1 className="text-2xl font-extrabold text-white tracking-tight">My Tools</h1>
       </div>
 
       {/* Content */}
