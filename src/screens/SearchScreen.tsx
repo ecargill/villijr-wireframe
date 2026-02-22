@@ -56,11 +56,11 @@ export default function SearchScreen({ onNavigate }: SearchScreenProps) {
             )}
             {result.status === 'available' && (
               <div className="flex gap-2">
-                <button className="flex-1 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold text-center">
-                  📱 Send SMS
+                <button className="flex-1 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold flex items-center justify-center gap-1">
+                  <span>📱</span> <span>Send SMS</span>
                 </button>
-                <button className="flex-1 py-2.5 rounded-lg border-2 border-primary text-primary text-sm font-semibold">
-                  👤 View Profile
+                <button className="flex-1 py-2.5 rounded-lg border-2 border-primary text-primary text-sm font-semibold flex items-center justify-center gap-1">
+                  <span>👤</span> <span>View Profile</span>
                 </button>
               </div>
             )}
