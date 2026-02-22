@@ -65,16 +65,6 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
           Sign In →
         </Button>
 
-        <div className="flex items-center gap-3 my-1">
-          <div className="flex-1 h-px bg-border" />
-          <span className="text-xs font-semibold text-content-muted">or</span>
-          <div className="flex-1 h-px bg-border" />
-        </div>
-
-        <Button variant="secondary" onClick={() => onNavigate('signup')}>
-          Create a new account
-        </Button>
-
         <p className="text-center text-xs text-content-muted pb-6">
           By signing in you agree to our{' '}
           <span className="text-primary font-semibold">Terms of Service</span>{' '}
