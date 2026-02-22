@@ -357,9 +357,6 @@ export default function AddToolScreen({ onBack }: AddToolScreenProps) {
           <Button onClick={handleManualAdd} disabled={!manualName.trim()}>
             ＋ Add to My Tools
           </Button>
-          <Button variant="secondary" onClick={() => setStep('choose')}>
-            Back
-          </Button>
         </div>
       )}
     </div>
