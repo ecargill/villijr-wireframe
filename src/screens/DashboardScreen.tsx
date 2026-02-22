@@ -1,6 +1,7 @@
+import { useState, useRef, useEffect } from 'react'
 import Card from '../components/ui/Card'
 
-type Screen = 'signup' | 'dashboard' | 'tools' | 'search' | 'villij' | 'maintenance'
+type Screen = 'splash' | 'login' | 'signup' | 'dashboard' | 'tools' | 'search' | 'villij' | 'maintenance' | 'add-tool'
 
 interface DashboardScreenProps {
   onNavigate: (screen: Screen) => void
@@ -15,12 +16,48 @@ const cards = [
 ]
 
 export default function DashboardScreen({ onNavigate }: DashboardScreenProps) {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    if (!menuOpen) return
+    const handleClick = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [menuOpen])
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="bg-primary px-6 py-5 flex items-center justify-between flex-shrink-0">
         <h1 className="text-2xl font-extrabold text-white tracking-tight">Villijr</h1>
-        <button className="text-2xl">⚙️</button>
+
+        {/* Gear + dropdown */}
+        <div className="relative" ref={menuRef}>
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            className="text-2xl w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/20 transition-colors"
+          >
+            ⚙️
+          </button>
+
+          {menuOpen && (
+            <div className="absolute right-0 top-12 w-48 bg-white rounded-2xl shadow-xl overflow-hidden z-50 border border-border">
+              <button
+                onClick={() => { setMenuOpen(false); onNavigate('login') }}
+                className="w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold text-danger hover:bg-red-50 transition-colors"
+              >
+                <span className="text-base">🚪</span>
+                Log out
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Content */}
