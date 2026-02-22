@@ -204,12 +204,11 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
 
         {/* Inline Add Category form */}
         <div
-          className="overflow-hidden transition-all duration-300 ease-in-out"
           style={{
+            overflow: 'hidden',
             maxHeight: addingCategory ? '480px' : '0px',
             opacity: addingCategory ? 1 : 0,
-            transform: addingCategory ? 'translateY(0)' : 'translateY(-8px)',
-            marginTop: addingCategory ? undefined : '-16px',
+            transition: 'max-height 350ms ease-in-out, opacity 250ms ease-in-out',
           }}
         >
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-primary/20 flex flex-col gap-4">
