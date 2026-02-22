@@ -203,8 +203,16 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
         </div>
 
         {/* Inline Add Category form */}
-        {addingCategory && (
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-primary/20 flex flex-col gap-4">
+        <div
+          className="overflow-hidden transition-all duration-300 ease-in-out"
+          style={{
+            maxHeight: addingCategory ? '480px' : '0px',
+            opacity: addingCategory ? 1 : 0,
+            transform: addingCategory ? 'translateY(0)' : 'translateY(-8px)',
+            marginTop: addingCategory ? undefined : '-16px',
+          }}
+        >
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-primary/20 flex flex-col gap-4">
             <p className="text-xs font-bold uppercase tracking-widest text-content-muted">New Category</p>
 
             {/* Icon picker */}
@@ -260,7 +268,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
               </button>
             </div>
           </div>
-        )}
+        </div>
 
         {filtered.map((cat) => (
           <ToolCategorySection key={cat.id} category={cat} />
