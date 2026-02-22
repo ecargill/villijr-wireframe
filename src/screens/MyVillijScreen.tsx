@@ -26,7 +26,7 @@ export default function MyVillijScreen({ onNavigate }: MyVillijScreenProps) {
         >
           ←
         </button>
-        <h1 className="text-2xl font-extrabold text-white tracking-tight">My Villij</h1>
+        <h1 className="text-2xl font-extrabold text-white tracking-tight">My Vilij</h1>
       </div>
 
       {/* Content */}
@@ -86,7 +86,7 @@ export default function MyVillijScreen({ onNavigate }: MyVillijScreenProps) {
         ))}
 
         <div className="mt-2">
-          <Button>+ Add Someone to My Villij</Button>
+          <Button>+ Add Someone to My Vilij</Button>
         </div>
       </div>
     </div>

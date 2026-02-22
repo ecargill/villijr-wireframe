@@ -21,7 +21,7 @@ export default function SplashScreen({ onNavigate }: SplashScreenProps) {
         </div>
         <div className="text-center">
           <h1 className="text-5xl font-extrabold text-white tracking-tight leading-none">
-            Villijr
+            Vilijr
           </h1>
           <p className="text-primary-light text-base font-medium mt-2 opacity-80">
             Share tools with your community

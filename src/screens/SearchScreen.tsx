@@ -30,8 +30,8 @@ export default function SearchScreen({ onNavigate }: SearchScreenProps) {
       <div className="flex-1 overflow-y-auto p-5 bg-surface flex flex-col gap-4">
         <SearchBar value={query} onChange={setQuery} placeholder="Search for tools..." />
 
-        {/* Villij results */}
-        <h3 className="text-xs font-bold uppercase tracking-widest text-content-muted">In Your Villij</h3>
+        {/* Vilij results */}
+        <h3 className="text-xs font-bold uppercase tracking-widest text-content-muted">In Your Vilij</h3>
 
         {villij.map((result) => (
           <div key={result.id} className="bg-white rounded-2xl p-5 shadow-sm">

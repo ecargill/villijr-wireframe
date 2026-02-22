@@ -18,7 +18,7 @@ export default function SignUpScreen({ onNavigate }: SignUpScreenProps) {
     <div className="flex-1 overflow-y-auto p-6 bg-surface">
       {/* Logo */}
       <div className="text-center mb-10 mt-4">
-        <h1 className="text-5xl font-extrabold text-primary tracking-tight mb-2">Villijr</h1>
+        <h1 className="text-5xl font-extrabold text-primary tracking-tight mb-2">Vilijr</h1>
         <p className="text-content-muted text-sm font-medium">Share tools with your community</p>
       </div>
 
@@ -73,7 +73,7 @@ export default function SignUpScreen({ onNavigate }: SignUpScreenProps) {
             onChange={(e) => update('search', e.target.value)}
             className="w-full px-4 py-3.5 border-2 border-border rounded-xl text-[15px] bg-white focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 placeholder:text-content-muted transition-colors"
           />
-          <p className="text-xs text-content-muted">We'll show you people nearby who are already on Villijr</p>
+          <p className="text-xs text-content-muted">We'll show you people nearby who are already on Vilijr</p>
         </div>
 
         <Button onClick={() => onNavigate('dashboard')}>

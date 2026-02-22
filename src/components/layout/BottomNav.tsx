@@ -9,7 +9,7 @@ const tabs = [
   { id: 'dashboard' as Screen, label: 'Home', icon: '🏠' },
   { id: 'search' as Screen, label: 'Search', icon: '🔍' },
   { id: 'tools' as Screen, label: 'My Tools', icon: '🛠️' },
-  { id: 'villij' as Screen, label: 'Villij', icon: '👥' },
+  { id: 'villij' as Screen, label: 'Vilij', icon: '👥' },
 ]
 
 export default function BottomNav({ activeScreen, onNavigate }: BottomNavProps) {

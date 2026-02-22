@@ -29,7 +29,7 @@ export default function LoginScreen({ onNavigate }: LoginScreenProps) {
         <div className="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center mb-4 shadow">
           <span className="text-3xl">🛠️</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">Villijr</h1>
+        <h1 className="text-3xl font-extrabold text-white tracking-tight">Vilijr</h1>
         <p className="text-white/70 text-sm font-medium mt-1">Welcome back</p>
       </div>
 
