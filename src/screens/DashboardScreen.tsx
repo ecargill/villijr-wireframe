@@ -60,29 +60,29 @@ export default function DashboardScreen({ onNavigate }: DashboardScreenProps) {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-6 bg-surface">
+      <div className="flex-1 flex flex-col p-5 bg-surface gap-4">
         {/* Welcome banner */}
-        <div className="bg-gradient-to-br from-primary to-primary-light rounded-2xl p-6 text-white mb-6">
-          <h2 className="text-xl font-bold mb-1">Welcome back, John! 👋</h2>
-          <p className="text-sm opacity-90">You have 3 tools on loan and 2 pending requests</p>
+        <div className="bg-gradient-to-br from-primary to-primary-light rounded-2xl px-5 py-4 text-white flex-shrink-0">
+          <h2 className="text-lg font-bold mb-0.5">Welcome back, John! 👋</h2>
+          <p className="text-xs opacity-90">You have 3 tools on loan and 2 pending requests</p>
         </div>
 
-        {/* Feature cards */}
-        <div className="flex flex-col gap-4">
+        {/* Feature cards — 2×2 grid */}
+        <div className="grid grid-cols-2 gap-3 flex-1">
           {cards.map((card) => (
             <Card
               key={card.title}
               onClick={card.screen ? () => onNavigate(card.screen!) : undefined}
-              className="relative"
+              className="relative flex flex-col justify-center items-center text-center !p-4"
             >
               {card.badge && (
-                <span className="absolute top-4 right-4 bg-danger text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                <span className="absolute top-2 right-2 bg-danger text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
                   {card.badge}
                 </span>
               )}
-              <div className="text-4xl mb-3">{card.icon}</div>
-              <div className="text-lg font-bold text-content">{card.title}</div>
-              <div className="text-sm text-content-muted">{card.description}</div>
+              <div className="text-3xl mb-2">{card.icon}</div>
+              <div className="text-sm font-bold text-content leading-tight">{card.title}</div>
+              <div className="text-xs text-content-muted mt-1 leading-snug">{card.description}</div>
             </Card>
           ))}
         </div>
