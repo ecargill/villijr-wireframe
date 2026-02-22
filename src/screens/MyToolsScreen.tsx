@@ -204,8 +204,8 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
           </button>
         </div>
 
-        {/* Inline Add Category form — always in DOM, height toggled via classes */}
-        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${addingCategory ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        {/* Inline Add Category form */}
+        {addingCategory && (
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-primary/20 flex flex-col gap-4">
             <p className="text-xs font-bold uppercase tracking-widest text-content-muted">New Category</p>
 
@@ -262,7 +262,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
               </button>
             </div>
           </div>
-        </div>
+        )}
 
         {filtered.map((cat) => (
           <ToolCategorySection key={cat.id} category={cat} />
