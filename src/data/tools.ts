@@ -6,6 +6,21 @@ export interface Tool {
   maint: boolean
   share: boolean
   tbd: boolean
+  // Optional enriched fields populated when a tool is identified via camera
+  make?: string
+  model?: string
+  yearRange?: string
+  manufacturerUrl?: string
+  partsUrl?: string
+  manualUrl?: string
+  photoUrl?: string
+}
+
+// Module-level store for user-added tools (persists for the session)
+export const userAddedTools: Tool[] = []
+
+export function addUserTool(tool: Tool) {
+  userAddedTools.push(tool)
 }
 
 export interface ToolCategory {

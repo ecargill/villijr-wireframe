@@ -1,4 +1,4 @@
-type Screen = 'signup' | 'dashboard' | 'tools' | 'search' | 'villij' | 'maintenance'
+type Screen = 'splash' | 'login' | 'signup' | 'dashboard' | 'tools' | 'search' | 'villij' | 'maintenance' | 'add-tool'
 
 interface BottomNavProps {
   activeScreen: Screen
@@ -13,7 +13,9 @@ const tabs = [
 ]
 
 export default function BottomNav({ activeScreen, onNavigate }: BottomNavProps) {
-  const activeTab = activeScreen === 'maintenance' ? 'dashboard' : activeScreen
+  const activeTab = activeScreen === 'maintenance' ? 'dashboard'
+    : activeScreen === 'add-tool' ? 'tools'
+    : activeScreen
 
   return (
     <div className="flex justify-around items-center py-2 bg-white border-t border-border flex-shrink-0">

@@ -9,8 +9,9 @@ import MyToolsScreen from './screens/MyToolsScreen'
 import SearchScreen from './screens/SearchScreen'
 import MyVillijScreen from './screens/MyVillijScreen'
 import MaintenanceScreen from './screens/MaintenanceScreen'
+import AddToolScreen from './screens/AddToolScreen'
 
-export type Screen = 'splash' | 'login' | 'signup' | 'dashboard' | 'tools' | 'search' | 'villij' | 'maintenance'
+export type Screen = 'splash' | 'login' | 'signup' | 'dashboard' | 'tools' | 'search' | 'villij' | 'maintenance' | 'add-tool'
 
 const SCREENS_WITH_NAV: Screen[] = ['dashboard', 'tools', 'search', 'villij', 'maintenance']
 
@@ -29,6 +30,7 @@ export default function App() {
       case 'search':      return <SearchScreen />
       case 'villij':      return <MyVillijScreen />
       case 'maintenance': return <MaintenanceScreen onNavigate={navigate} />
+      case 'add-tool':    return <AddToolScreen onBack={() => navigate('tools')} />
       default:            return <SplashScreen onNavigate={navigate} />
     }
   }
