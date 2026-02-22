@@ -157,25 +157,31 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
       <div className="flex-1 overflow-y-auto p-5 bg-surface flex flex-col gap-4">
         <SearchBar value={query} onChange={setQuery} placeholder="Search your tools..." />
 
-        {/* Add Tool CTA — prominent pill button */}
-        <button
-          onClick={() => onNavigate('add-tool')}
-          className="flex items-center gap-3 bg-primary rounded-2xl px-5 py-4 shadow-sm hover:opacity-90 transition-opacity text-left"
-        >
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl flex-shrink-0">
-            📷
-          </div>
-          <div className="flex-1">
+        {/* Action buttons row */}
+        <div className="flex gap-3">
+          <button
+            onClick={() => onNavigate('add-tool')}
+            className="flex-1 flex items-center gap-3 bg-primary rounded-2xl px-4 py-4 shadow-sm hover:opacity-90 transition-opacity text-left"
+          >
+            <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center text-lg flex-shrink-0">
+              📷
+            </div>
             <p className="font-bold text-white text-sm">Add a Tool</p>
-          </div>
-          <span className="text-white/70 text-lg">›</span>
-        </button>
+            <span className="text-white/70 text-lg ml-auto">›</span>
+          </button>
+
+          <button className="flex-1 flex items-center gap-3 bg-white border border-border rounded-2xl px-4 py-4 shadow-sm hover:bg-gray-50 transition-colors text-left">
+            <div className="w-9 h-9 rounded-xl bg-surface flex items-center justify-center text-lg flex-shrink-0">
+              🗂️
+            </div>
+            <p className="font-bold text-content text-sm">Add Category</p>
+            <span className="text-content-muted text-lg ml-auto">›</span>
+          </button>
+        </div>
 
         {filtered.map((cat) => (
           <ToolCategorySection key={cat.id} category={cat} />
         ))}
-
-        <Button variant="secondary">+ Add New Category</Button>
       </div>
     </div>
   )
