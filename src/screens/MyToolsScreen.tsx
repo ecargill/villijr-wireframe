@@ -93,15 +93,29 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
   const [query, setQuery] = useState('')
   const [addedCount, setAddedCount] = useState(userAddedTools.length)
   const [userCategories, setUserCategories] = useState<ToolCategory[]>([])
-  const [addingCategory, setAddingCategory] = useState(false)
+  const [catFormMounted, setCatFormMounted] = useState(false)   // in the DOM?
+  const [catFormVisible, setCatFormVisible] = useState(false)   // animated open?
   const [newCatName, setNewCatName] = useState('')
   const [newCatIcon, setNewCatIcon] = useState('🔨')
   const nameInputRef = useRef<HTMLInputElement>(null)
 
+  const openCatForm = () => {
+    setCatFormMounted(true)
+    // Double rAF: let browser paint the closed state first, then animate open
+    requestAnimationFrame(() => requestAnimationFrame(() => setCatFormVisible(true)))
+  }
+
+  const closeCatForm = () => {
+    setCatFormVisible(false)
+    setTimeout(() => setCatFormMounted(false), 350) // unmount after transition
+  }
+
+  const addingCategory = catFormMounted // used for button highlight logic
+
   // Focus name input when form opens
   useEffect(() => {
-    if (addingCategory) nameInputRef.current?.focus()
-  }, [addingCategory])
+    if (catFormVisible) nameInputRef.current?.focus()
+  }, [catFormVisible])
 
   if (userAddedTools.length > 0 && userAddedTools.length !== addedCount) {
     setAddedCount(userAddedTools.length)
@@ -150,7 +164,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
     setUserCategories((prev) => [...prev, newCat])
     setNewCatName('')
     setNewCatIcon('🔨')
-    setAddingCategory(false)
+    closeCatForm()
   }
 
   return (
@@ -184,7 +198,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
           </button>
 
           <button
-            onClick={() => setAddingCategory((v) => !v)}
+            onClick={() => catFormMounted ? closeCatForm() : openCatForm()}
             className={`flex-1 flex items-center gap-3 rounded-2xl px-4 py-4 shadow-sm transition-colors text-left border
               ${addingCategory
                 ? 'bg-primary/10 border-primary/30'
@@ -203,11 +217,12 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
         </div>
 
         {/* Inline Add Category form */}
+        {catFormMounted && (
         <div
           style={{
             overflow: 'hidden',
-            maxHeight: addingCategory ? '480px' : '0px',
-            opacity: addingCategory ? 1 : 0,
+            maxHeight: catFormVisible ? '480px' : '0px',
+            opacity: catFormVisible ? 1 : 0,
             transition: 'max-height 350ms ease-in-out, opacity 250ms ease-in-out',
           }}
         >
@@ -252,7 +267,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
             {/* Actions */}
             <div className="flex gap-3">
               <button
-                onClick={() => { setAddingCategory(false); setNewCatName(''); setNewCatIcon('🔨') }}
+                onClick={() => { closeCatForm(); setNewCatName(''); setNewCatIcon('🔨') }}
                 className="flex-1 py-3 rounded-xl border border-border text-sm font-semibold text-content-muted hover:bg-gray-50 transition-colors"
               >
                 Cancel
@@ -268,6 +283,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
             </div>
           </div>
         </div>
+        )}
 
         {filtered.map((cat) => (
           <ToolCategorySection key={cat.id} category={cat} />
