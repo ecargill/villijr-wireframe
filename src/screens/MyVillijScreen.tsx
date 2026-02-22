@@ -5,7 +5,11 @@ import Button from '../components/ui/Button'
 import { pendingRequests, connectedNeighbors } from '../data/neighbors'
 import type { ConnectionRequest } from '../data/neighbors'
 
-export default function MyVillijScreen() {
+interface MyVillijScreenProps {
+  onNavigate: (screen: string) => void
+}
+
+export default function MyVillijScreen({ onNavigate }: MyVillijScreenProps) {
   const [query, setQuery] = useState('')
   const [pending, setPending] = useState<ConnectionRequest[]>(pendingRequests)
 
@@ -15,7 +19,13 @@ export default function MyVillijScreen() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-primary px-6 py-5 flex-shrink-0">
+      <div className="bg-primary px-6 py-5 flex items-center gap-3 flex-shrink-0">
+        <button
+          onClick={() => onNavigate('dashboard')}
+          className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center text-white text-lg hover:bg-white/30 transition-colors"
+        >
+          ←
+        </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">My Villij</h1>
       </div>
 
