@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Badge from '../components/ui/Badge'
 import Button from '../components/ui/Button'
+import HamburgerMenu from '../components/ui/HamburgerMenu'
 import { maintenanceTasks } from '../data/maintenance'
 import type { MaintenanceTask } from '../data/maintenance'
 
@@ -33,6 +34,7 @@ export default function MaintenanceScreen({ onNavigate }: MaintenanceScreenProps
           ←
         </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">Maintenance</h1>
+        <HamburgerMenu onNavigate={onNavigate} />
       </div>
 
       {/* Content */}

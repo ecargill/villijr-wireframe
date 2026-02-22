@@ -2,9 +2,11 @@ import { useState, useRef } from 'react'
 import { addUserTool } from '../data/tools'
 import type { Tool } from '../data/tools'
 import Button from '../components/ui/Button'
+import HamburgerMenu from '../components/ui/HamburgerMenu'
 
 interface AddToolScreenProps {
   onBack: () => void
+  onNavigate: (screen: any) => void
 }
 
 // ─── Simulated AI identification results keyed by rough "detected label" ───────
@@ -178,7 +180,7 @@ function LinkRow({ icon, label, url }: { icon: string; label: string; url: strin
 // ─── Main screen ──────────────────────────────────────────────────────────────
 type Step = 'choose' | 'scanning' | 'result' | 'manual'
 
-export default function AddToolScreen({ onBack }: AddToolScreenProps) {
+export default function AddToolScreen({ onBack, onNavigate }: AddToolScreenProps) {
   const [step, setStep] = useState<Step>('choose')
   const [photoUrl, setPhotoUrl] = useState<string | null>(null)
   const [identifiedTool, setIdentifiedTool] = useState<Partial<Tool> | null>(null)
@@ -249,6 +251,7 @@ export default function AddToolScreen({ onBack }: AddToolScreenProps) {
           ←
         </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">Add a Tool</h1>
+        <HamburgerMenu onNavigate={onNavigate} />
       </div>
 
       {/* ── CHOOSE step ── */}

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import SearchBar from '../components/ui/SearchBar'
+import HamburgerMenu from '../components/ui/HamburgerMenu'
 import { toolCategories, userAddedTools } from '../data/tools'
 import type { Tool, ToolCategory } from '../data/tools'
 
@@ -166,6 +167,7 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
           ←
         </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">My Tools</h1>
+        <HamburgerMenu onNavigate={onNavigate} />
       </div>
 
       {/* Content */}

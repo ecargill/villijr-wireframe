@@ -30,7 +30,7 @@ export default function App() {
       case 'search':      return <SearchScreen onNavigate={navigate} />
       case 'villij':      return <MyVillijScreen onNavigate={navigate} />
       case 'maintenance': return <MaintenanceScreen onNavigate={navigate} />
-      case 'add-tool':    return <AddToolScreen onBack={() => navigate('tools')} />
+      case 'add-tool':    return <AddToolScreen onBack={() => navigate('tools')} onNavigate={navigate} />
       default:            return <SplashScreen onNavigate={navigate} />
     }
   }

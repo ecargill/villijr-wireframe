@@ -2,11 +2,12 @@ import { useState } from 'react'
 import SearchBar from '../components/ui/SearchBar'
 import Avatar from '../components/ui/Avatar'
 import Button from '../components/ui/Button'
+import HamburgerMenu from '../components/ui/HamburgerMenu'
 import { pendingRequests, connectedNeighbors } from '../data/neighbors'
 import type { ConnectionRequest } from '../data/neighbors'
 
 interface MyVillijScreenProps {
-  onNavigate: (screen: string) => void
+  onNavigate: (screen: any) => void
 }
 
 export default function MyVillijScreen({ onNavigate }: MyVillijScreenProps) {
@@ -27,6 +28,7 @@ export default function MyVillijScreen({ onNavigate }: MyVillijScreenProps) {
           ←
         </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">My Vilij</h1>
+        <HamburgerMenu onNavigate={onNavigate} />
       </div>
 
       {/* Content */}

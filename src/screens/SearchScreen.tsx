@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import SearchBar from '../components/ui/SearchBar'
 import Badge from '../components/ui/Badge'
+import HamburgerMenu from '../components/ui/HamburgerMenu'
 import { searchResults } from '../data/neighbors'
 
 interface SearchScreenProps {
-  onNavigate: (screen: string) => void
+  onNavigate: (screen: any) => void
 }
 
 export default function SearchScreen({ onNavigate }: SearchScreenProps) {
@@ -24,6 +25,7 @@ export default function SearchScreen({ onNavigate }: SearchScreenProps) {
           ←
         </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">Find a Tool</h1>
+        <HamburgerMenu onNavigate={onNavigate} />
       </div>
 
       {/* Content */}
