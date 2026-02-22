@@ -3,7 +3,11 @@ import SearchBar from '../components/ui/SearchBar'
 import Badge from '../components/ui/Badge'
 import { searchResults } from '../data/neighbors'
 
-export default function SearchScreen() {
+interface SearchScreenProps {
+  onNavigate: (screen: string) => void
+}
+
+export default function SearchScreen({ onNavigate }: SearchScreenProps) {
   const [query, setQuery] = useState('Hammer Drill')
 
   const villij = searchResults.filter((r) => r.type === 'neighbor')
@@ -12,7 +16,13 @@ export default function SearchScreen() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-primary px-6 py-5 flex-shrink-0">
+      <div className="bg-primary px-6 py-5 flex items-center gap-3 flex-shrink-0">
+        <button
+          onClick={() => onNavigate('dashboard')}
+          className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center text-white text-lg hover:bg-white/30 transition-colors"
+        >
+          ←
+        </button>
         <h1 className="text-2xl font-extrabold text-white tracking-tight">Find a Tool</h1>
       </div>
 

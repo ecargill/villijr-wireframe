@@ -27,7 +27,7 @@ export default function App() {
       case 'signup':      return <SignUpScreen onNavigate={navigate} />
       case 'dashboard':   return <DashboardScreen onNavigate={navigate} />
       case 'tools':       return <MyToolsScreen onNavigate={navigate} />
-      case 'search':      return <SearchScreen />
+      case 'search':      return <SearchScreen onNavigate={navigate} />
       case 'villij':      return <MyVillijScreen />
       case 'maintenance': return <MaintenanceScreen onNavigate={navigate} />
       case 'add-tool':    return <AddToolScreen onBack={() => navigate('tools')} />
