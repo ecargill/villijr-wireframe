@@ -101,13 +101,12 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
 
   const openCatForm = () => {
     setCatFormMounted(true)
-    // Double rAF: let browser paint the closed state first, then animate open
-    requestAnimationFrame(() => requestAnimationFrame(() => setCatFormVisible(true)))
+    setCatFormVisible(true)
   }
 
   const closeCatForm = () => {
     setCatFormVisible(false)
-    setTimeout(() => setCatFormMounted(false), 350) // unmount after transition
+    setTimeout(() => setCatFormMounted(false), 350)
   }
 
   const addingCategory = catFormMounted // used for button highlight logic
@@ -217,13 +216,23 @@ export default function MyToolsScreen({ onNavigate }: MyToolsScreenProps) {
         </div>
 
         {/* Inline Add Category form */}
+        <style>{`
+          @keyframes catFormIn {
+            from { max-height: 0; opacity: 0; }
+            to   { max-height: 600px; opacity: 1; }
+          }
+          @keyframes catFormOut {
+            from { max-height: 600px; opacity: 1; }
+            to   { max-height: 0; opacity: 0; }
+          }
+        `}</style>
         {catFormMounted && (
         <div
           style={{
             overflow: 'hidden',
-            maxHeight: catFormVisible ? '480px' : '0px',
-            opacity: catFormVisible ? 1 : 0,
-            transition: 'max-height 350ms ease-in-out, opacity 250ms ease-in-out',
+            animation: catFormVisible
+              ? 'catFormIn 350ms ease-in-out forwards'
+              : 'catFormOut 350ms ease-in-out forwards',
           }}
         >
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-primary/20 flex flex-col gap-4">
