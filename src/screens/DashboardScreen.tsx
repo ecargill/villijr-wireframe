@@ -12,7 +12,6 @@ const cards = [
   { icon: '🔧', title: 'Maintenance', description: '3 tools need attention', screen: 'maintenance' as Screen, badge: 3 },
   { icon: '📦', title: 'My Tools', description: 'Manage your tool inventory', screen: 'tools' as Screen },
   { icon: '👥', title: 'My Vilij', description: 'Connect with tool-sharing neighbors', screen: 'villij' as Screen },
-  { icon: '🆕', title: 'Start a Vilij', description: 'Create your own tool-sharing circle', screen: null },
 ]
 
 export default function DashboardScreen({ onNavigate }: DashboardScreenProps) {
