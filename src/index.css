@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body {
+    @apply bg-gray-900 font-sans antialiased;
+    overscroll-behavior: none;
+  }
+
+  * {
+    scrollbar-width: none;
+    box-sizing: border-box;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  input, textarea {
+    font-family: inherit;
+  }
+}
