@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
+    ]
+  }
+}
