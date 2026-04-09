@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Vilijr - Tool Sharing Community</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -37,66 +35,18 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            height: 100svh; /* Small viewport height for mobile browsers */
+            height: 100svh;
         }
 
-        /* Container for mobile screens */
+        /* App container */
         .phone-container {
-            max-width: 420px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            overflow: hidden;
-            position: relative;
+            width: 100%;
             height: 100vh;
             height: 100svh;
+            background: var(--card-bg);
             display: flex;
             flex-direction: column;
-        }
-
-        @media (min-width: 421px) {
-            body {
-                background: #1F2937;
-                padding: 20px 0;
-                height: 100vh;
-            }
-            
-            .phone-container {
-                height: calc(100vh - 40px);
-                max-height: 900px;
-                border-radius: 32px;
-                box-shadow: 0 20px 60px var(--shadow), 0 0 0 8px #1F2937;
-            }
-        }
-
-        /* Notch */
-        .notch {
-            height: 32px;
-            background: #1F2937;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        @media (max-width: 420px) {
-            .notch {
-                display: none;
-            }
-        }
-
-        .notch-center {
-            width: 120px;
-            height: 24px;
-            background: #000;
-            border-radius: 0 0 16px 16px;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            overflow: hidden;
         }
 
         /* Smooth scrolling */
@@ -531,8 +481,15 @@
         /* Dashboard cards */
         .dashboard-cards {
             display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin-top: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .dashboard-card {
@@ -758,17 +715,72 @@
         .nav-btn.active {
             background: var(--primary);
         }
+
+        /* Responsive: tablet and desktop */
+        @media (min-width: 768px) {
+            .screen.active {
+                display: grid;
+                grid-template-columns: 220px 1fr;
+                grid-template-rows: auto 1fr;
+            }
+
+            .screen.active .header {
+                grid-column: 1 / -1;
+                grid-row: 1;
+            }
+
+            .screen.active .content {
+                grid-column: 2;
+                grid-row: 2;
+                max-width: 960px;
+                padding: 32px 40px;
+            }
+
+            .screen.active .bottom-nav {
+                grid-column: 1;
+                grid-row: 2;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+                border-top: none;
+                border-right: 1px solid var(--border);
+                padding: 16px 12px;
+                gap: 4px;
+                overflow-y: auto;
+            }
+
+            .screen.active .nav-item {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 12px;
+                padding: 12px 16px;
+                border-radius: 10px;
+                font-size: 14px;
+            }
+
+            /* Login/splash screens stay centered, no sidebar */
+            #screen-signup.active,
+            #screen-splash.active {
+                display: flex;
+                grid-template-columns: unset;
+            }
+
+            #screen-signup .content {
+                max-width: 440px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .screen.active .content {
+                max-width: 1200px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="phone-container">
-        <!-- Notch -->
-        <div class="notch">
-            <span>9:41</span>
-            <div class="notch-center"></div>
-            <span>⚡︎ 100%</span>
-        </div>
-
         <!-- Splash Screen -->
         <div class="screen active" id="screen-splash" style="background: var(--primary); align-items: center; justify-content: center; text-align: center; padding: 40px 32px;">
             <div style="margin-bottom: 32px;">
