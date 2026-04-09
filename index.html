@@ -837,19 +837,20 @@
                     <input type="text" placeholder="Search your tools..." />
                 </div>
 
-                <!-- Dynamic asset list -->
-                <div id="asset-list"></div>
-
-                <div id="new-category-form" style="display:none; margin-top: 16px;">
+                <!-- Add category inline -->
+                <div id="new-category-form" style="display:none; margin-bottom: 16px;">
                     <div style="display: flex; gap: 10px;">
-                        <input id="new-category-input" type="text" placeholder="Category name..." style="flex:1; padding: 12px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px;" />
+                        <input id="new-category-input" type="text" placeholder="New category name..." onkeydown="if(event.key==='Enter') addCategory()" style="flex:1; padding: 12px 16px; border: 2px solid var(--primary); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px;" />
                         <button onclick="addCategory()" style="background: var(--primary); color: white; border: none; border-radius: 12px; padding: 12px 20px; font-family: 'Outfit', sans-serif; font-weight: 700; cursor: pointer;">Add</button>
                         <button onclick="document.getElementById('new-category-form').style.display='none'" style="background: var(--border); color: var(--text); border: none; border-radius: 12px; padding: 12px 16px; font-family: 'Outfit', sans-serif; font-weight: 700; cursor: pointer;">✕</button>
                     </div>
                 </div>
-                <button class="btn btn-secondary" style="margin-top: 16px;" onclick="document.getElementById('new-category-form').style.display='flex'">
+                <button class="btn btn-secondary" style="margin-bottom: 16px;" onclick="document.getElementById('new-category-form').style.display='flex'; document.getElementById('new-category-input').focus()">
                     + Add New Category
                 </button>
+
+                <!-- Dynamic asset list -->
+                <div id="asset-list"></div>
             </div>
             <div class="bottom-nav">
                 <div class="nav-item" onclick="showScreen('screen-dashboard')">
