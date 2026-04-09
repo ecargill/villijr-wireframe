@@ -769,8 +769,19 @@
             <span>⚡︎ 100%</span>
         </div>
 
+        <!-- Splash Screen -->
+        <div class="screen active" id="screen-splash" style="background: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 32px;">
+            <div style="margin-bottom: 32px;">
+                <h1 style="font-family: 'Outfit', sans-serif; font-size: 52px; font-weight: 800; color: white; letter-spacing: -1px; line-height: 1;">Vilijr</h1>
+                <p style="color: rgba(255,255,255,0.75); font-size: 16px; font-weight: 400; margin-top: 8px;">Share tools with your community</p>
+            </div>
+            <div style="width: 64px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden;">
+                <div id="splash-progress" style="height: 100%; width: 0%; background: white; border-radius: 2px; transition: width 2s linear;"></div>
+            </div>
+        </div>
+
         <!-- Screen 1: Sign Up -->
-        <div class="screen active" id="screen-signup">
+        <div class="screen" id="screen-signup">
             <div class="content">
                 <div class="logo">
                     <h1>Villijr</h1>
@@ -1376,6 +1387,13 @@
     </div>
 
     <script>
+        // Splash screen auto-transition
+        window.addEventListener('DOMContentLoaded', () => {
+            const progress = document.getElementById('splash-progress');
+            setTimeout(() => { progress.style.width = '100%'; }, 50);
+            setTimeout(() => { showScreen('screen-signup'); }, 2200);
+        });
+
         function showScreen(screenId) {
             // Hide all screens
             document.querySelectorAll('.screen').forEach(screen => {
@@ -1394,7 +1412,7 @@
             }
 
             // Show/hide bottom nav based on screen
-            const screensWithoutNav = ['screen-signup'];
+            const screensWithoutNav = ['screen-signup', 'screen-splash'];
             const allBottomNavs = document.querySelectorAll('.bottom-nav');
             
             if (screensWithoutNav.includes(screenId)) {
