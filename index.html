@@ -824,13 +824,11 @@
             </div>
         </div>
 
-        <!-- Screen 2: Tool Management -->
+        <!-- Screen 2: My Assets -->
         <div class="screen" id="screen-tools">
             <div class="header">
-                <h1>My Tools</h1>
-                <button class="header .back-btn" onclick="showScreen('screen-dashboard')" style="border: none; background: none; color: white; font-size: 16px; cursor: pointer; font-weight: 600;">
-                    Done
-                </button>
+                <h1>My Assets</h1>
+                <button onclick="showScreen('screen-add-asset')" style="background: white; color: var(--primary); border: none; border-radius: 10px; padding: 8px 16px; font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer;">+ Add Asset</button>
             </div>
             <div class="content" style="padding-top: 16px;">
                 <div class="search-bar">
@@ -985,12 +983,101 @@
                 </div>
                 <div class="nav-item active">
                     <span class="nav-icon">🛠️</span>
-                    <span>My Tools</span>
+                    <span>My Assets</span>
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-villij')">
                     <span class="nav-icon">👥</span>
                     <span>Vilij</span>
                 </div>
+            </div>
+        </div>
+
+        <!-- Screen: Add Asset -->
+        <div class="screen" id="screen-add-asset">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('screen-tools')">←</button>
+                <h1>Add Asset</h1>
+                <div style="width:36px;"></div>
+            </div>
+            <div class="content">
+
+                <!-- Photo Scan Option -->
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); border-radius: 16px; padding: 24px; color: white; margin-bottom: 24px; cursor: pointer;" onclick="showAssetScanFlow()">
+                    <div style="font-size: 40px; margin-bottom: 12px;">📷</div>
+                    <div style="font-size: 18px; font-weight: 700; margin-bottom: 6px;">Scan with Camera</div>
+                    <div style="font-size: 14px; opacity: 0.85;">Take a photo and our AI will identify your asset, pull specs, manuals, and maintenance info automatically.</div>
+                </div>
+
+                <!-- Scan loading state (hidden by default) -->
+                <div id="scan-flow" style="display:none; text-align:center; padding: 32px 0;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">🔍</div>
+                    <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Analyzing photo...</div>
+                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">AI is identifying your asset and searching for specs, manuals, and maintenance schedules.</div>
+                    <div style="background: var(--border); border-radius: 4px; height: 6px; overflow: hidden; margin: 0 auto; max-width: 240px;">
+                        <div id="scan-progress" style="height: 100%; width: 0%; background: var(--primary); border-radius: 4px; transition: width 2.5s ease;"></div>
+                    </div>
+                    <!-- Simulated result -->
+                    <div id="scan-result" style="display:none; text-align:left; margin-top: 32px; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px var(--shadow);">
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Asset Identified</div>
+                        <div style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">DeWalt DCD791 Drill</div>
+                        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">20V MAX Brushless Drill/Driver</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+                            <div style="background: var(--bg); border-radius: 10px; padding: 12px;">
+                                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Category</div>
+                                <div style="font-weight: 700;">Power Tools</div>
+                            </div>
+                            <div style="background: var(--bg); border-radius: 10px; padding: 12px;">
+                                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Est. Value</div>
+                                <div style="font-weight: 700;">$159</div>
+                            </div>
+                            <div style="background: var(--bg); border-radius: 10px; padding: 12px;">
+                                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Manual</div>
+                                <div style="font-weight: 700; color: var(--primary);">Found ✓</div>
+                            </div>
+                            <div style="background: var(--bg); border-radius: 10px; padding: 12px;">
+                                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Maintenance</div>
+                                <div style="font-weight: 700; color: var(--primary);">Schedule ready</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="showScreen('screen-tools')">Add to My Assets</button>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div id="add-asset-divider" style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+                    <div style="flex:1; height:1px; background: var(--border);"></div>
+                    <span style="font-size: 13px; color: var(--text-muted); font-weight: 600;">or add manually</span>
+                    <div style="flex:1; height:1px; background: var(--border);"></div>
+                </div>
+
+                <!-- Manual Entry Form -->
+                <div id="manual-entry-form">
+                    <div class="form-group">
+                        <label>Asset Name</label>
+                        <input type="text" placeholder="e.g. Circular Saw, Lawn Mower..." />
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select style="width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px; background: white; color: var(--text); appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22><path fill=%22%236B7280%22 d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center;">
+                            <option value="" disabled selected>Select a category...</option>
+                            <option>Hand Tools</option>
+                            <option>Power Tools</option>
+                            <option>Yard Tools</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Brand / Model</label>
+                        <input type="text" placeholder="e.g. DeWalt DCD791" />
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea placeholder="Condition, purchase date, serial number..." style="height: 80px; resize: none; width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="showScreen('screen-tools')">Save Asset</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -1091,7 +1178,7 @@
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-tools')">
                     <span class="nav-icon">🛠️</span>
-                    <span>My Tools</span>
+                    <span>My Assets</span>
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-villij')">
                     <span class="nav-icon">👥</span>
@@ -1130,7 +1217,7 @@
 
                     <div class="dashboard-card" onclick="showScreen('screen-tools')">
                         <div class="card-icon">📦</div>
-                        <div class="card-title">My Tools</div>
+                        <div class="card-title">My Assets</div>
                         <div class="card-description">Manage your tool inventory</div>
                     </div>
 
@@ -1158,7 +1245,7 @@
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-tools')">
                     <span class="nav-icon">🛠️</span>
-                    <span>My Tools</span>
+                    <span>My Assets</span>
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-villij')">
                     <span class="nav-icon">👥</span>
@@ -1267,7 +1354,7 @@
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-tools')">
                     <span class="nav-icon">🛠️</span>
-                    <span>My Tools</span>
+                    <span>My Assets</span>
                 </div>
                 <div class="nav-item active">
                     <span class="nav-icon">👥</span>
@@ -1355,7 +1442,7 @@
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-tools')">
                     <span class="nav-icon">🛠️</span>
-                    <span>My Tools</span>
+                    <span>My Assets</span>
                 </div>
                 <div class="nav-item" onclick="showScreen('screen-villij')">
                     <span class="nav-icon">👥</span>
@@ -1368,7 +1455,7 @@
         <div class="nav-controls" style="display: none;">
             <button class="nav-btn" onclick="showScreen('screen-signup')">Sign Up</button>
             <button class="nav-btn" onclick="showScreen('screen-dashboard')">Dashboard</button>
-            <button class="nav-btn" onclick="showScreen('screen-tools')">My Tools</button>
+            <button class="nav-btn" onclick="showScreen('screen-tools')">My Assets</button>
             <button class="nav-btn" onclick="showScreen('screen-search')">Search</button>
             <button class="nav-btn" onclick="showScreen('screen-villij')">Vilij</button>
             <button class="nav-btn" onclick="showScreen('screen-maintenance')">Maintenance</button>
@@ -1383,7 +1470,31 @@
             setTimeout(() => { showScreen('screen-signup'); }, 2200);
         });
 
+        function showAssetScanFlow() {
+            const scanFlow = document.getElementById('scan-flow');
+            const divider = document.getElementById('add-asset-divider');
+            const manualForm = document.getElementById('manual-entry-form');
+            const progress = document.getElementById('scan-progress');
+            const result = document.getElementById('scan-result');
+
+            scanFlow.style.display = 'block';
+            divider.style.display = 'none';
+            manualForm.style.display = 'none';
+            result.style.display = 'none';
+            progress.style.width = '0%';
+
+            setTimeout(() => { progress.style.width = '100%'; }, 50);
+            setTimeout(() => { result.style.display = 'block'; }, 2800);
+        }
+
         function showScreen(screenId) {
+            // Reset add asset screen state when leaving
+            if (screenId !== 'screen-add-asset') {
+                const scanFlow = document.getElementById('scan-flow');
+                const divider = document.getElementById('add-asset-divider');
+                const manualForm = document.getElementById('manual-entry-form');
+                if (scanFlow) { scanFlow.style.display = 'none'; divider.style.display = 'flex'; manualForm.style.display = 'block'; }
+            }
             // Hide all screens
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
@@ -1401,7 +1512,7 @@
             }
 
             // Show/hide bottom nav based on screen
-            const screensWithoutNav = ['screen-signup', 'screen-splash'];
+            const screensWithoutNav = ['screen-signup', 'screen-splash', 'screen-add-asset'];
             const allBottomNavs = document.querySelectorAll('.bottom-nav');
             
             if (screensWithoutNav.includes(screenId)) {
