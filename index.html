@@ -836,139 +836,17 @@
                     <input type="text" placeholder="Search your tools..." />
                 </div>
 
-                <!-- Hand Tools Category -->
-                <div class="tool-category">
-                    <div class="category-header" onclick="toggleCategory(this)">
-                        <div class="category-title">
-                            <span class="category-icon">🔨</span>
-                            <span>Hand Tools</span>
-                        </div>
-                        <span class="category-toggle">▼</span>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-columns">
-                            <div></div>
-                            <div class="column-header">
-                                <span class="column-label">Maint.</span>
-                                <input type="checkbox" class="checkbox" title="Toggle all maintenance" />
-                            </div>
-                            <div class="column-header">
-                                <span class="column-label">Share</span>
-                                <input type="checkbox" class="checkbox" title="Toggle all sharing" />
-                            </div>
-                            <div class="column-header">
-                                <span class="column-label">TBD</span>
-                                <input type="checkbox" class="checkbox" title="Toggle all TBD" />
-                            </div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Hammer</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Screwdriver Set</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Socket Wrench Set</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
+                <!-- Dynamic asset list -->
+                <div id="asset-list"></div>
+
+                <div id="new-category-form" style="display:none; margin-top: 16px;">
+                    <div style="display: flex; gap: 10px;">
+                        <input id="new-category-input" type="text" placeholder="Category name..." style="flex:1; padding: 12px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px;" />
+                        <button onclick="addCategory()" style="background: var(--primary); color: white; border: none; border-radius: 12px; padding: 12px 20px; font-family: 'Outfit', sans-serif; font-weight: 700; cursor: pointer;">Add</button>
+                        <button onclick="document.getElementById('new-category-form').style.display='none'" style="background: var(--border); color: var(--text); border: none; border-radius: 12px; padding: 12px 16px; font-family: 'Outfit', sans-serif; font-weight: 700; cursor: pointer;">✕</button>
                     </div>
                 </div>
-
-                <!-- Power Tools Category -->
-                <div class="tool-category">
-                    <div class="category-header" onclick="toggleCategory(this)">
-                        <div class="category-title">
-                            <span class="category-icon">⚡</span>
-                            <span>Power Tools</span>
-                        </div>
-                        <span class="category-toggle">▼</span>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-columns">
-                            <div></div>
-                            <div class="column-header">
-                                <span class="column-label">Maint.</span>
-                                <input type="checkbox" class="checkbox" />
-                            </div>
-                            <div class="column-header">
-                                <span class="column-label">Share</span>
-                                <input type="checkbox" class="checkbox" />
-                            </div>
-                            <div class="column-header">
-                                <span class="column-label">TBD</span>
-                                <input type="checkbox" class="checkbox" />
-                            </div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Circular Saw</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Drill Driver</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Angle Grinder</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Yard Tools Category -->
-                <div class="tool-category">
-                    <div class="category-header" onclick="toggleCategory(this)">
-                        <div class="category-title">
-                            <span class="category-icon">🌿</span>
-                            <span>Yard Tools</span>
-                        </div>
-                        <span class="category-toggle">▼</span>
-                    </div>
-                    <div class="category-content">
-                        <div class="category-columns">
-                            <div></div>
-                            <div class="column-header">
-                                <span class="column-label">Maint.</span>
-                                <input type="checkbox" class="checkbox" />
-                            </div>
-                            <div class="column-header">
-                                <span class="column-label">Share</span>
-                                <input type="checkbox" class="checkbox" />
-                            </div>
-                            <div class="column-header">
-                                <span class="column-label">TBD</span>
-                                <input type="checkbox" class="checkbox" />
-                            </div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Lawn Mower</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
-                        <div class="tool-item">
-                            <div class="tool-name">Leaf Blower</div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" checked /></div>
-                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn btn-secondary" style="margin-top: 24px;">
+                <button class="btn btn-secondary" style="margin-top: 16px;" onclick="document.getElementById('new-category-form').style.display='flex'">
                     + Add New Category
                 </button>
             </div>
@@ -1058,11 +936,8 @@
                     </div>
                     <div class="form-group">
                         <label>Category</label>
-                        <select style="width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px; background: white; color: var(--text); appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22><path fill=%22%236B7280%22 d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center;">
+                        <select id="category-select" style="width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px; background: white; color: var(--text); appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22><path fill=%22%236B7280%22 d=%22M7 10l5 5 5-5z%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center;">
                             <option value="" disabled selected>Select a category...</option>
-                            <option>Hand Tools</option>
-                            <option>Power Tools</option>
-                            <option>Yard Tools</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1074,7 +949,7 @@
                         <textarea placeholder="Condition, purchase date, serial number..." style="height: 80px; resize: none; width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 15px;"></textarea>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" onclick="showScreen('screen-tools')">Save Asset</button>
+                        <button class="btn btn-primary" onclick="saveAsset()">Save Asset</button>
                     </div>
                 </div>
 
@@ -1465,10 +1340,115 @@
     <script>
         // Splash screen auto-transition
         window.addEventListener('DOMContentLoaded', () => {
+            renderAssetList();
+            rebuildCategoryDropdown();
             const progress = document.getElementById('splash-progress');
             setTimeout(() => { progress.style.width = '100%'; }, 50);
             setTimeout(() => { showScreen('screen-signup'); }, 2200);
         });
+
+        // Shared asset/category data
+        const categories = {
+            'Hand Tools': ['Hammer', 'Screwdriver Set', 'Socket Wrench Set'],
+            'Power Tools': ['Circular Saw', 'Drill Driver', 'Angle Grinder'],
+            'Yard Tools': ['Lawn Mower', 'Leaf Blower']
+        };
+
+        const categoryIcons = {
+            'Hand Tools': '🔨',
+            'Power Tools': '⚡',
+            'Yard Tools': '🌿'
+        };
+
+        function getCategoryIcon(name) {
+            return categoryIcons[name] || '📦';
+        }
+
+        function rebuildCategoryDropdown() {
+            const select = document.getElementById('category-select');
+            const current = select.value;
+            // Clear all except placeholder
+            while (select.options.length > 1) select.remove(1);
+            Object.keys(categories).forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                select.appendChild(opt);
+            });
+            if (current) select.value = current;
+        }
+
+        function addCategory() {
+            const input = document.getElementById('new-category-input');
+            const name = input.value.trim();
+            if (!name) return;
+            if (!categories[name]) {
+                categories[name] = [];
+                renderAssetList();
+                rebuildCategoryDropdown();
+            }
+            input.value = '';
+            document.getElementById('new-category-form').style.display = 'none';
+        }
+
+        function saveAsset() {
+            const nameInput = document.querySelector('#manual-entry-form input[placeholder*="Circular"]');
+            const categorySelect = document.getElementById('category-select');
+            const brandInput = document.querySelector('#manual-entry-form input[placeholder*="DeWalt"]');
+
+            const name = nameInput.value.trim();
+            const category = categorySelect.value;
+
+            if (!name || !category) {
+                alert('Please enter an asset name and select a category.');
+                return;
+            }
+
+            if (!categories[category]) categories[category] = [];
+            categories[category].push(name);
+
+            // Reset form
+            nameInput.value = '';
+            categorySelect.value = '';
+            brandInput.value = '';
+
+            renderAssetList();
+            showScreen('screen-tools');
+        }
+
+        function renderAssetList() {
+            const container = document.getElementById('asset-list');
+            container.innerHTML = '';
+
+            Object.entries(categories).forEach(([cat, assets]) => {
+                const section = document.createElement('div');
+                section.className = 'tool-category';
+                section.innerHTML = `
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <div class="category-title">
+                            <span class="category-icon">${getCategoryIcon(cat)}</span>
+                            <span>${cat}</span>
+                        </div>
+                        <span class="category-toggle">▼</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="category-columns">
+                            <div></div>
+                            <div class="column-header"><span class="column-label">Maint.</span><input type="checkbox" class="checkbox" /></div>
+                            <div class="column-header"><span class="column-label">Share</span><input type="checkbox" class="checkbox" /></div>
+                            <div class="column-header"><span class="column-label">TBD</span><input type="checkbox" class="checkbox" /></div>
+                        </div>
+                        ${assets.map(a => `
+                        <div class="tool-item">
+                            <div class="tool-name">${a}</div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                            <div class="checkbox-wrapper"><input type="checkbox" class="checkbox" /></div>
+                        </div>`).join('')}
+                    </div>`;
+                container.appendChild(section);
+            });
+        }
 
         function showAssetScanFlow() {
             const scanFlow = document.getElementById('scan-flow');
