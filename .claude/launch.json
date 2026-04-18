@@ -4,7 +4,13 @@
     {
       "name": "villijr",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--", "--port", "5174"],
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/erikcargill/Desktop/Vilijr/vilijr-sveltekit"],
+      "port": 5173
+    },
+    {
+      "name": "space-needle-kiosk",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/erikcargill/Projects/space-needle-ticket-kiosk"],
       "port": 5174
     }
   ]
